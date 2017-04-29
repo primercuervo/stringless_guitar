@@ -1,0 +1,107 @@
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+CONECTAR A SIE:
+Todo está en la wiki:
+	http://en.qi-hardware.com/wiki/Hardware_Hello_World
+
+*) Después de conectar o de resetear SIE, el indicador de red mostrará como si se stuviera conectando a alguna; lo hará 2 veces. durante de la primera dar en consola:
+
+	1) "dmesg", esto nos tendrá que regresar en la última línea algo como esto:
+		usb0: register 'cdc_ether' at usb-0000:00:1d.7-1, CDC Ethernet Device, 02:11:87:53:00:ab
+		
+*) La segunda vez que el indicador de red muestre como si se stuviera conectando, desconectarse de esa red y despues si: 
+
+	2) Escribir en consola "sudo ifconfig usb0 192.168.254.200 up"  para configurar la conexión usb de SIE
+	3) Escribir en consola "ssh 192.168.254.101 -l root" (para generar una conexión "ssh" - no telnet -)
+	
+*) La contraseña para SIE es solo dar "ENTER"
+
+Si las cosas no se hacen en ese orden SIE se puede conectar pero luego de un rato se desconecta  :@
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+MANDAR ARCHIVOS A SIE
+Todo está en la wiki:
+	http://en.qi-hardware.com/wiki/Hardware_Hello_World
+	
+Nos debemos ubicar en el path del PC donde se encuentra el archivo o lo que queramos mandar a SIE y luego escribir en consola según lo que queramos alguna 
+de la siguientes opciones:
+
+$ scp "archivo o aplicación a copiar (sin comillas)" root@192.168.254.101:/usr/bin		//copia el archivo al path /usr/bin
+$ scp "archivo o aplicación a copiar (sin comillas)" root@192.168.254.101:			//copia el archivo al path /root
+$ scp "archivo o aplicación a copiar (sin comillas)" root@192.168.254.101:/root/mi_carpeta	//copia el archivo al path /root/mi_carpeta
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+MANDAR ".bit" A SIE
+
+Para usar en la fpga algún ".bit" debemos:
+	1) Pasaremos el archivo "mi_bit.ko" a la carpeta que deseemos en SIE
+	2) Para correr del .bit usamos el comando "xc3sprog ./mi_bit.bit" en consola
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+MÓDULOS DEL KERNEL
+Para la instalación de un módulo del kernel haremos:
+
+	SIN USAR LAS COMILLAS
+	1) Pasaremos el archivo "mi_módulo.ko" a la carpeta que deseemos en SIE
+	2) Escribimos en consola "insmod mi_módulo.ko" para instalar el módulo
+	3) Luego escribimos en consola "dmesg" para mirar que obtenemos a la salida del espacio de kernel. La última línea que nos aparece es algo como
+	   "mknod /dev/mi_módulo c 252 0", debemos copiar y pegarla allí mismo en consola para crear el fichero "mi_modulo" en la carpeta "dev". El número
+	   '252' que aparece allí es el número majic que identifica al módulo
+	
+*) Para quitar un módulo del kernel se debe usar el comando "rmmod" sin comillas
+*) Para que el sistema nos muestre una lista de los módulos instalados se emplea el comando "lsmod" sin comillas
+
+/*xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx*/
+			echo Q > /dev/irq  // para el irq, esta línea habilita el módulo de irq
+			echo S > /dev/irq  // para el irq, esta línea deshabilita el módulo de irq
+			
+	si hay alguna aplicación en espacio de usuario, la pasamos a la carpeta de SIE donde la queramos y para ejecutarla usamos en consola:
+	" ./mi_aplicación" sin comillas
+	para ver la lista de interrupciones usamos "cat /proc/interrupts" sin comillas
+/*xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx*/
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+*) El siguiente comando se usa en consola para buscar secciones de código en los archivos contenidos dentro la carpeta donde estamos parados.
+		grep -iR blablabla*
+
+*) El siguiente comando se usa en consola para buscar archivos contenidos en la carpeta donde estamos parados
+		find -iname "*blablabla.bla*"   
+		
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+CREAR PARCHES
+*) Escribimos en consola la siguiente líea de código
+
+			diff -u  path/archivo_malo.txt   path/archivo_bueno.txt  >  path/mi_parche.patch
+			
+		-) "diff" es un comando para revisar las diferencias entre "archivo_malo.txt" y "archivo_bueno.txt" (la extensión de los archivos malo y 
+		    bueno puede ser la que nosotros queramos)
+		-) ">" es un operador que permite que los cambios a realizar entre "archivo_malo.txt" y "archivo_bueno.txt" queden guardados en el nuevo 
+		   archivo "mi_parche.patch"
+		-) "-u" le permite a "diff" generar en el archivo "mi_parche.patch" comentarios que indican que archivos se modificaron (cual era el malo, 
+		   cual el bueno, las rutas de cada uno, etc.)
+
+UTILIZAR PARCHES
+*) Escribimos en consola la siguiente línea
+	
+			patch -p0 < path/mi_parche.patch
+			
+		-) "patch" nos permite aplicar los cambios guardados en "mi_parche.patch" en el archivo "archivo_malo.txt", para corregirlo con respecto 
+		   a  "archivo_bueno.txt"
+		   archivo 
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+VISUALIZAR PROCESOS
+Para mirar los procesos que se están ejecutando en la máquina toca escribir en consola la siguiente línea:
+
+			ps -aux
+			
+Eso nos debe devolver en pantalla la lista de procesos; la primera columna es el número "PID" con el cual se identifica.
+Si quisieramos matar un proceso toca escribir en consola:
+
+			kill -9 "número PID (sin comillas)"

@@ -1,0 +1,64 @@
+# ==== Clock inputs (CLK) ====
+NET "clk" LOC = "C9";
+#NET "clk" PERIOD = 20 HIGH 50%;
+NET  led  LOC = "F9";
+NET  rst  LOC = "V16";
+NET  gpio_entrada[0]  LOC = "B6";
+#NET  gpio_entrada[1]  LOC = "P67";
+#NET  gpio_entrada[1]  pulldown;
+NET  gpio_entrada[1]  LOC = "E7";
+NET  gpio_entrada[2]  LOC = "H13";
+NET  gpio_entrada[3]  LOC = "V4";
+NET  gpio_entrada[4]  LOC = "C5";
+NET  gpio_entrada[5]  LOC = "L13";
+NET  gpio_entrada[6]  LOC = "K17";
+NET  gpio_entrada[7]  LOC = "D18";
+NET  gpio_entrada[8]  LOC = "F7";
+NET  gpio_entrada[9]  LOC = "D7";
+NET  gpio_entrada[10]  LOC = "C7";
+#NET  gpio_entrada[12]  LOC = "P00";
+#NET  gpio_entrada[12]  | pulldown |;
+NET  gpio_salida[0]  LOC = "A6";
+NET  gpio_salida[1]  LOC = "R15";
+NET  gpio_salida[2]  LOC = "R16";
+NET  gpio_salida[3]  LOC = "P17";
+NET  gpio_salida[4]  LOC = "M15";
+
+NET  gpio_salida[5]  LOC = "L17";
+NET  gpio_salida[6]  LOC = "L18";
+NET  gpio_salida[7]  LOC = "M18";
+
+# ==== UART ====
+#NET "uart_rxd" LOC = "P68";
+#NET "uart_txd" LOC = "P67";
+
+#ADDRESS BUS
+#NET "addr<12>" LOC = "P90";
+#NET "addr<11>" LOC = "P91";
+#NET "addr<10>" LOC = "P85";
+#NET "addr<9>" LOC = "P92";
+#NET "addr<8>" LOC = "P94";
+#NET "addr<7>" LOC = "P95";
+#NET "addr<6>" LOC = "P98";
+#NET "addr<5>" LOC = "P3";
+#NET "addr<4>" LOC = "P2";
+#NET "addr<3>" LOC = "P78";
+#NET "addr<2>" LOC = "P79";
+#NET "addr<1>" LOC = "P83";
+#NET "addr<0>" LOC = "P84";
+
+#DATA BUS
+#NET "sram_data<7>"  LOC = "P4";
+#NET "sram_data<6>"  LOC = "P5";
+#NET "sram_data<5>"  LOC = "P9";
+#NET "sram_data<4>"  LOC = "P10";
+#NET "sram_data<3>"  LOC = "P11";
+#NET "sram_data<2>"  LOC = "P12";
+#NET "sram_data<1>"  LOC = "P15";
+#NET "sram_data<0>"  LOC = "P16";
+
+#CONTROL BUS
+
+#NET "nwe"   LOC = "P88";
+#NET "noe"   LOC = "P86";
+#NET "ncs"   LOC = "P69";
