@@ -24,3 +24,6 @@ your hand in a position that interrupts the reception of light into the cell,
 a sound will be triggered, and thereby getting a stringless guitar. The trigger,
 before reaching the GPIO ports of the FPGA, was controlled by a small analog
 stage and a set of DIACs.
+
+
+You can see the Full report in PDF format also included in this repository.
